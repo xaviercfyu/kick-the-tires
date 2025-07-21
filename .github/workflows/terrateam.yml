@@ -9,6 +9,8 @@
 ##########################################################################
  name: 'Terrateam Workflow'
  on:
+   schedule:
+    - cron: '0 8 * * *'  # Runs daily at 8 AM UTC
    workflow_dispatch:
      inputs:
        # The work-token and api-base-url are automatically passed in by the Terrateam backend

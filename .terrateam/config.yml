@@ -1,0 +1,27 @@
+# .terrateam/config.yml (at repo root)
+version: "1"
+workflows:
+  - tag_query: ""  # Applies to all directories
+    plan:
+      - type: validate
+        on_failure:
+          # GitHub-specific actions
+          - type: comment
+            message: "❌ Validation failed: ${output}"
+          - type: set_status
+            state: "error"
+            description: "Terraform validation error"
+          # Optional: Trigger a GitHub Actions job
+          #- type: webhook
+          #  url: "https://api.github.com/repos/${GITHUB_REPO}/dispatches"
+          #  method: POST
+          #  headers:
+          #    Authorization: "Bearer ${GITHUB_TOKEN}"
+          #    Accept: "application/vnd.github.everest-preview+json"
+          #  body: |
+          #    {
+          #      "event_type": "terraform_validation_failed",
+          #      "client_payload": {
+          #        "pr_number": "${GITHUB_PR_NUMBER}"
+          #      }
+          #    }
